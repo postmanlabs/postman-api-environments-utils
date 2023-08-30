@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { updateVarByName } = require("./_updateVarByName");
+const { listEnvsWithVarValue } = require("./_listEnvsWithVarValue");
 
 //get the api key from the environment variables
 const apiKey = process.env.POSTMAN_API_KEY;
@@ -12,20 +12,19 @@ if (!apiKey) {
 //get the environment id from the command line
 const args = require("yargs").argv;
 const workspaceId = args.workspaceId;
-const variableName = args.variableName;
 const variableValue = args.variableValue;
 
 //if any of the arguments are missing, exit
-if (!workspaceId || !variableName || !variableValue) {
+if (!workspaceId || !variableValue) {
   console.error(
-    "Usage: updateVarByName.js --workspaceId=WORKSPACE_ID --variableName=VARIABLE_NAME --variableValue=VARIABLE_VALUE"
+    "Usage: listEnvsWithVarValue.js --workspaceId=WORKSPACE_ID --variableValue=VARIABLE_VALUE"
   );
   process.exit(1);
 }
 
-updateVarByName(apiKey, workspaceId, variableName, variableValue)
-  .then((variablesUpdated) => {
-    console.log(`Updated ${variablesUpdated} variables`);
+listEnvsWithVarValue(apiKey, workspaceId, variableValue)
+  .then((variablesFound) => {
+    console.log(`Found ${variablesFound} variables`);
   })
   .catch((error) => {
     console.log(`Error: ${error}`);

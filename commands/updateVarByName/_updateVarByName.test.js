@@ -9,14 +9,7 @@ jest.mock("../../common/apiClient", () => {
         { id: "ENVIRONMENT_ID_1" },
         { id: "ENVIRONMENT_ID_2" },
       ]),
-    getEnvironment: jest
-      .fn()
-      .mockResolvedValueOnce({
-        values: [{ key: "VARIABLE_NAME", value: "VARIABLE_VALUE" }],
-      })
-      .mockResolvedValueOnce({
-        values: [{ key: "ANOTHER_VARIABLE_NAME", value: "VARIABLE_VALUE" }],
-      }),
+    getEnvironment: jest.fn(),
     updateEnvironment: jest.fn().mockResolvedValue({}),
   };
 });
@@ -26,6 +19,13 @@ describe("test updateVarByName", () => {
     jest.clearAllMocks();
   });
   test("when two environments are returned and one of them contains the variable, one update is executed", async () => {
+    apiClient.getEnvironment
+      .mockResolvedValueOnce({
+        values: [{ key: "VARIABLE_NAME", value: "VARIABLE_VALUE" }],
+      })
+      .mockResolvedValueOnce({
+        values: [{ key: "ANOTHER_VARIABLE_NAME", value: "VARIABLE_VALUE" }],
+      });
     const result = await updateVarByName(
       "API_KEY",
       "WORKSPACE_ID",
@@ -36,6 +36,15 @@ describe("test updateVarByName", () => {
     expect(apiClient.getAllEnvironments).toHaveBeenCalledTimes(1);
     expect(apiClient.getEnvironment).toHaveBeenCalledTimes(2);
     expect(apiClient.updateEnvironment).toHaveBeenCalledTimes(1);
+    expect(apiClient.updateEnvironment).toHaveBeenCalledWith(
+      "API_KEY",
+      "ENVIRONMENT_ID_1",
+      {
+        environment: {
+          values: [{ key: "VARIABLE_NAME", value: "NEW_VARIABLE_VALUE" }],
+        },
+      }
+    );
   });
 
   test("when two environments are returned and no one of them contains the variable, no update is executed", async () => {

@@ -8,7 +8,7 @@ const updateVarByName = async (
   apiKey,
   workspaceId,
   variableName,
-  variableValue
+  variableValue,
 ) => {
   //get all the environments
   const environments = await getAllEnvironments(apiKey, workspaceId);
@@ -20,11 +20,11 @@ const updateVarByName = async (
     console.log(`Processing environment ${environment.id}`);
     const environmentDetails = await getEnvironment(apiKey, environment.id);
     const variable = environmentDetails.values.find(
-      (variable) => variable.key === variableName
+      (variable) => variable.key === variableName,
     );
     if (variable) {
       console.log(
-        `  Updating variable "${variableName}" in environment from "${variable.value}" to "${variableValue}"`
+        `  Updating variable "${variableName}" in environment from "${variable.value}" to "${variableValue}"`,
       );
       variable.value = variableValue;
       try {

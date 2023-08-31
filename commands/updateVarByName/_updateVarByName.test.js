@@ -30,7 +30,7 @@ describe("test updateVarByName", () => {
       "API_KEY",
       "WORKSPACE_ID",
       "VARIABLE_NAME",
-      "NEW_VARIABLE_VALUE"
+      "NEW_VARIABLE_VALUE",
     );
     expect(result).toEqual(1);
     expect(apiClient.getAllEnvironments).toHaveBeenCalledTimes(1);
@@ -43,7 +43,7 @@ describe("test updateVarByName", () => {
         environment: {
           values: [{ key: "VARIABLE_NAME", value: "NEW_VARIABLE_VALUE" }],
         },
-      }
+      },
     );
   });
 
@@ -55,7 +55,7 @@ describe("test updateVarByName", () => {
       "API_KEY",
       "WORKSPACE_ID",
       "NON_EXISTING_VARIABLE_NAME",
-      "NEW_VARIABLE_VALUE"
+      "NEW_VARIABLE_VALUE",
     );
     expect(result).toEqual(0);
     expect(apiClient.getAllEnvironments).toHaveBeenCalledTimes(1);
@@ -69,7 +69,7 @@ describe("test updateVarByName", () => {
       "API_KEY",
       "WORKSPACE_ID",
       "NON_EXISTING_VARIABLE_NAME",
-      "NEW_VARIABLE_VALUE"
+      "NEW_VARIABLE_VALUE",
     );
     expect(result).toEqual(0);
     expect(apiClient.getAllEnvironments).toHaveBeenCalledTimes(1);

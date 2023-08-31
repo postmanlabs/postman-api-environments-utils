@@ -13,11 +13,11 @@ const listEnvsWithVarValue = async (apiKey, workspaceId, variableValue) => {
   for (const environment of environments) {
     const environmentDetails = await getEnvironment(apiKey, environment.id);
     const variable = environmentDetails.values.find(
-      (variable) => variable.value === variableValue
+      (variable) => variable.value === variableValue,
     );
     if (variable) {
       console.log(
-        `Found variable "${variable.key}" in environment "${environmentDetails.name}" (${environment.id}) with value "${variableValue}"`
+        `Found variable "${variable.key}" in environment "${environmentDetails.name}" (${environment.id}) with value "${variableValue}"`,
       );
       variablesFound++;
     }

@@ -11,6 +11,7 @@ jest.mock("./axiosUtils", () => {
 });
 const axiosGet = axios.get;
 const axiosPut = axios.put;
+const axiosPost = axios.post;
 
 describe("test getAllEnvironments", () => {
   afterEach(() => {
@@ -29,7 +30,7 @@ describe("test getAllEnvironments", () => {
     expect(axiosGet).toHaveBeenCalledTimes(1);
     expect(axiosGet).toHaveBeenCalledWith(
       `${POSTMAN_API_BASE_URL}/environments?workspace=${workspaceId}`,
-      {}
+      {},
     );
   });
 });
@@ -51,7 +52,36 @@ describe("test getEnvironment", () => {
     expect(axiosGet).toHaveBeenCalledTimes(1);
     expect(axiosGet).toHaveBeenCalledWith(
       `${POSTMAN_API_BASE_URL}/environments/${environmentId}`,
-      {}
+      {},
+    );
+  });
+});
+
+describe("test createEnvironment", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  test("calls the Postman API with the proper URL", async () => {
+    const environmentId = "ENVIRONMENT_ID";
+    axiosPost.mockResolvedValue({
+      status: 200,
+      data: { environment: [{ id: environmentId }] },
+    });
+    const apiKey = "API_KEY";
+    const workspaceId = "WORKSPACE_ID";
+    const environmentContents = "test";
+    await apiClient.createEnvironment(
+      apiKey,
+      workspaceId,
+      environmentContents,
+    );
+    expect(getAxiosConfig).toHaveBeenCalledTimes(1);
+    expect(getAxiosConfig).toHaveBeenCalledWith(apiKey);
+    expect(axiosPost).toHaveBeenCalledTimes(1);
+    expect(axiosPost).toHaveBeenCalledWith(
+      `${POSTMAN_API_BASE_URL}/environments?workspace=${workspaceId}`,
+      environmentContents,
+      {},
     );
   });
 });
@@ -71,7 +101,7 @@ describe("test updateEnvironment", () => {
     await apiClient.updateEnvironment(
       apiKey,
       environmentId,
-      environmentContents
+      environmentContents,
     );
     expect(getAxiosConfig).toHaveBeenCalledTimes(1);
     expect(getAxiosConfig).toHaveBeenCalledWith(apiKey);
@@ -79,7 +109,7 @@ describe("test updateEnvironment", () => {
     expect(axiosPut).toHaveBeenCalledWith(
       `${POSTMAN_API_BASE_URL}/environments/${environmentId}`,
       environmentContents,
-      {}
+      {},
     );
   });
 });

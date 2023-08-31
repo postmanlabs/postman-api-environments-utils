@@ -17,7 +17,7 @@ const variableValue = args.variableValue;
 //if any of the arguments are missing, exit
 if (!workspaceId || !variableValue) {
   console.error(
-    "Usage: listEnvsWithVarValue.js --workspaceId=WORKSPACE_ID --variableValue=VARIABLE_VALUE"
+    "Usage: listEnvsWithVarValue.js --workspaceId=WORKSPACE_ID --variableValue=VARIABLE_VALUE",
   );
   process.exit(1);
 }

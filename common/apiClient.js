@@ -14,22 +14,37 @@ const getEnvironment = async (postmanApiKey, environmentId) => {
   return response.data.environment;
 };
 
+const createEnvironment = async (
+  postmanApiKey,
+  workspaceId,
+  environmentContents,
+) => {
+  const url = `${POSTMAN_API_BASE_URL}/environments?workspace=${workspaceId}`;
+  const response = await axios.post(
+    url,
+    environmentContents,
+    getAxiosConfig(postmanApiKey),
+  );
+  return response.data.environment;
+};
+
 const updateEnvironment = async (
   postmanApiKey,
   environmentId,
-  environmentContents
+  environmentContents,
 ) => {
   const url = `${POSTMAN_API_BASE_URL}/environments/${environmentId}`;
   const response = await axios.put(
     url,
     environmentContents,
-    getAxiosConfig(postmanApiKey)
+    getAxiosConfig(postmanApiKey),
   );
-  return response;
+  return response.data.environment;
 };
 
 module.exports = {
   getAllEnvironments,
   getEnvironment,
+  createEnvironment,
   updateEnvironment,
 };

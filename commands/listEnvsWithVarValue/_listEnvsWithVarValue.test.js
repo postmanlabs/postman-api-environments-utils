@@ -34,7 +34,7 @@ describe("test listEnvsWithVarValue", () => {
     const result = await listEnvsWithVarValue(
       "API_KEY",
       "WORKSPACE_ID",
-      "VARIABLE_VALUE"
+      "VARIABLE_VALUE",
     );
     expect(result).toEqual(1);
     expect(apiClient.getAllEnvironments).toHaveBeenCalledTimes(1);
@@ -54,7 +54,7 @@ describe("test listEnvsWithVarValue", () => {
     const result = await listEnvsWithVarValue(
       "API_KEY",
       "WORKSPACE_ID",
-      "NEW_VARIABLE_VALUE"
+      "NEW_VARIABLE_VALUE",
     );
     expect(result).toEqual(0);
     expect(apiClient.getAllEnvironments).toHaveBeenCalledTimes(1);
@@ -67,7 +67,7 @@ describe("test listEnvsWithVarValue", () => {
     const result = await listEnvsWithVarValue(
       "API_KEY",
       "WORKSPACE_ID",
-      "NEW_VARIABLE_VALUE"
+      "NEW_VARIABLE_VALUE",
     );
     expect(result).toEqual(0);
     expect(apiClient.getAllEnvironments).toHaveBeenCalledTimes(1);

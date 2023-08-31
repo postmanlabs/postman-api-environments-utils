@@ -18,7 +18,7 @@ const variableValue = args.variableValue;
 //if any of the arguments are missing, exit
 if (!workspaceId || !variableName || !variableValue) {
   console.error(
-    "Usage: updateVarByName.js --workspaceId=WORKSPACE_ID --variableName=VARIABLE_NAME --variableValue=VARIABLE_VALUE"
+    "Usage: updateVarByName.js --workspaceId=WORKSPACE_ID --variableName=VARIABLE_NAME --variableValue=VARIABLE_VALUE",
   );
   process.exit(1);
 }
